@@ -17,14 +17,22 @@ class Board extends React.Component {
     this.tileClick.bind(this);
   }
   componentDidMount() {
+    let N = this.state.N;
     let tempArr = [];
-    for (let i = 0; i < Math.pow(this.state.N, 2); i++) {
+    let blank = false;
+    for (let i = 0; i < N * N; i++) {
+      if(i === N * N - 1){
+        blank = !blank;
+      } else {
+        blank = blank;
+      }
       tempArr.push(
         {
           id: i,
           currentPos: i,
           winPos: i,
-          clicked: false,
+          clicked: false, 
+          blankTile: blank
         }
       )
     }
@@ -33,6 +41,7 @@ class Board extends React.Component {
 
   tileClick() {
     console.log("cleeked")
+  
   }
 
   render() {
@@ -40,7 +49,7 @@ class Board extends React.Component {
       <div className="container">
         <div className="row">
           {this.state.Board.map((tile, index) =>
-            <Tile key={index} id={tile.id} currentPos={tile.currentPos} winPos={tile.winPos} tileClick={this.tileClick} />)}
+            <Tile key={index} id={tile.id} currentPos={tile.currentPos} winPos={tile.winPos} clicked={tile.clicked} blank={this.blankTile} tileClick={this.tileClick} />)}
         </div>
       </div>
     )
